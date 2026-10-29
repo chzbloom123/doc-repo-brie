@@ -1,0 +1,18 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.local-access.txt
+data/
+backups/
+tmp/
+test-results/
+starter-songs/
+assets/
+# Private creative brief and unpublished character/world references.
+goal.md
+mibble.md
+world.md
+*.log
+.DS_Store

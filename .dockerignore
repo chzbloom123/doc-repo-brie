@@ -1,0 +1,14 @@
+node_modules
+dist
+.git
+.env*
+.local-access.txt
+data
+backups
+starter-songs
+assets
+goal.md
+mibble.md
+world.md
+test-results
+tmp
