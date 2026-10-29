@@ -53,6 +53,17 @@ The twelve original song notes remain blank for Brie. There are two published lo
 9. Stop and restart `npm run dev`; content and order persist. Run `npm run backup` before major editing sessions.
 10. Press the button that says not to. The station takes no responsibility for the resulting lack of urgency.
 
-## Remaining deployment validation
+## Live Railway validation — October 28, 2026
 
-The local application and SQLite adapter were exercised. The S3 adapter has controlled integration coverage, but **no live Railway PostgreSQL, Bucket, Docker deployment, public HTTPS domain, or real mobile hardware has been provisioned/tested**. Before publishing, follow the README, confirm live database migrations, Secure cookies behind Railway's proxy, real Bucket upload/range delivery, persistence after redeploy, and a production backup/restore. Mobile browser playback/background behavior varies by OS and should be checked on Brie and Chaz's actual phones. The source repository is [chzbloom123/doc-repo-brie](https://github.com/chzbloom123/doc-repo-brie); Railway deployment remains a separate step.
+The station is deployed at [doc-repo-brie-production.up.railway.app](https://doc-repo-brie-production.up.railway.app), backed by PostgreSQL 18 and a private Railway Bucket. GitHub source is `chzbloom123/doc-repo-brie`, branch `main`. The web service serves the frontend and API on one HTTPS origin.
+
+- Production startup, database migrations, `/api/health`, Docker deployment, and the configured health check succeeded.
+- All twelve original audio files and their embedded artwork were uploaded through the production editor API. Downloads from the live service matched the original SHA-256 checksums. Both collections retained their names, descriptions, and song order. No song note or notebook text was invented.
+- Every track returned a correct `206` response for a byte-range request. Live browser playback advanced normally.
+- Production login succeeded. Session cookies are Secure, HttpOnly, and SameSite Strict. Anonymous editor reads returned `401`, invalid CSRF tokens and foreign origins returned `403`, and an unsigned direct Bucket request was denied.
+- After a full service redeploy, the library, collection memberships, and authenticated editor session remained intact.
+- Daily database backups retain six days; weekly backups retain twenty-seven days. A manual **WGOB launch library** snapshot was created. PostgreSQL has no public TCP proxy.
+- A complete production backup was downloaded to the ignored `backups/railway-launch/` folder, then restored into isolated local SQLite/media storage. All records and media hashes matched. PostgreSQL exports BIGINT byte counts as strings; SQLite reads those counts as numbers. The restore comparison normalized that representation only.
+- The fifteen automated tests passed with localhost networking enabled, and the production frontend build passed. Infrastructure plan/apply completed with no remaining configuration changes.
+
+The portable production backup restore was tested locally; a Railway-native database restore into another hosted database has not been exercised. Mobile browser playback/background behavior varies by OS and should be checked on Brie and Chaz's actual phones. Bucket objects need their own retained backups; Railway database snapshots do not include them. The private launch backup provides the initial independent media copy.
